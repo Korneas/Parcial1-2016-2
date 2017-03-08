@@ -69,19 +69,19 @@ public class Logica implements Observer {
 		app.ellipse(x, y, 40, 40);
 
 		if (start && id == 1) {
+			if(y==app.height/2 && x==app.width/2 && darVuelta){
+				try {
+					c.enviar(new Movement(id, 1, "vuelta"), GROUP_ADDRESS);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 			if (x < app.width + 30 && y == app.height / 2) {
 				x++;
 			}
 
 			if (y > app.height / 2 && x == app.width / 2) {
-				if (!darVuelta) {
-					try {
-						c.enviar(new Movement(id, 1, "vuelta"), GROUP_ADDRESS);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					darVuelta=true;
-				}
+
 				y--;
 			}
 
@@ -92,6 +92,7 @@ public class Logica implements Observer {
 					e.printStackTrace();
 				}
 				start = false;
+				darVuelta=true;
 			}
 		}
 
@@ -135,8 +136,8 @@ public class Logica implements Observer {
 		}
 
 		if (start && id == 4) {
-			
-			if (x > app.width/2 && y == app.height / 2) {
+
+			if (x > app.width / 2 && y == app.height / 2) {
 				x--;
 			}
 
@@ -167,7 +168,7 @@ public class Logica implements Observer {
 			if (mov.getEmisor() == 4) {
 				if (mov.getReceptor() == id) {
 					if (mov.getContenido().contains("start")) {
-						if (x != app.width / 2 && y != app.height / 2) {
+						if (x != app.width / 2) {
 							x = app.width / 2;
 							y = app.height + 30;
 						}
